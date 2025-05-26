@@ -3,43 +3,40 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { Button } from "@/components/ui/button";
-import { Confetti } from "@/components/magicui/confetti";
 import Lottie from 'lottie-react'; // If using lottie-react
-import Animation from './assets/Animation.json'; // Adjust the path as needed
+import Animation from './assets/Animation.json'; // Adjust path as needed
 import img1 from './assets/page1.jpg';
 import img2 from './assets/25years.jpg';
 import begin from './assets/begin.jpg';
-
+import { FaRegHeart } from "react-icons/fa";
 import "./App.css";
 
 const pages = [
   {
     title: "Welcome to Our 25th Anniversary Silver Jublie !",
     content: `No one has ever seen god; but if we love one another, God lives in us and his love is made complete in us. \n - 1 John 4:12 
-    \n கடவுளை எவரும் என்றுமே கண்டதில்லை. நாம் ஒருவர் மற்றவரிடம் அன்பு கொண்டுள்ளோமென்றால் கடவுள் நம்மோடு இணைந்திருப்பார்; அவரது அன்பு நம்மிடம் நிறைவு பெறும்.
-    - 1  யோவான் 4:12`,
+\n கடவுளை எவரும் என்றுமே கண்டதில்லை. நாம் ஒருவர் மற்றவரிடம் அன்பு கொண்டுள்ளோமென்றால் கடவுள் நம்மோடு இணைந்திருப்பார்; அவரது அன்பு நம்மிடம் நிறைவு பெறும்.
+- 1  யோவான் 4:12`,
     image: img1,
-    imageStyle: { width: "300px", height: "120px" },
+    imageStyle: { maxWidth: "300px", height: "auto" },
     rsvp: false,
     Lottie: false,
     bgColor: "#8E1616",
   },
   {
     title: "The beginning of a wonderful Journey ",
-    content: `From the moment we said "I do",
-              \n The stars aligned, the skies turned new.
-              \n A love so deep, so purely true —
-              \n Forever began… with me and you.
-
-`,
+    content: <>
+    <span className="p-10"><p> From the moment we said "I do",</p>
+          <p> The stars aligned, the skies turned new.</p>
+         <p>  A love so deep, so purely true</p>
+          <p> Forever began… with me and you.</p></span>
+    </>,
     image: begin,
-    imageStyle: { width: "350px", height: "260px", marginTop: "-40px" },
-
+    imageStyle: { maxWidth: "350px", height: "200px", marginTop: "20px" },
     rsvp: false,
     Lottie: false,
     bgColor: "#A31D1D",
   },
-
   {
     title: "Chapter 25",
     content: `Twenty-five years of love’s sweet embrace,
@@ -47,7 +44,7 @@ const pages = [
 \nTogether we’ve grown, forever one
 \nOur silver story has just begun.`,
     image: img2,
-    imageStyle: { width: "100%", height: "200px" },
+    imageStyle: { maxWidth: "100%", height: "auto", maxHeight: "200px" },
     rsvp: false,
     Lottie: false,
     bgColor: "#A31D1D",
@@ -59,13 +56,13 @@ const pages = [
       <p>Date: May 29th, 2025</p>
       <p>Venue: Dhyana Ashram</p>
       <p>Time: 11 AM onwards</p>
-      <br></br>
+      <br />
       <p><span style={{ fontWeight: "bold", }}>LUNCH</span></p>
       <p>Venue: Juanto Ananti Apartment Santhome</p>
     </>,
-    image: null, // Or just remove this line
+    image: null,
     Lottie: true,
-    lottieFile: Animation, // Add this if you want to use different Lottie files
+    lottieFile: Animation,
     rsvp: true,
     bgColor: "#8E1616",
   },
@@ -99,12 +96,11 @@ const handleClick = () => {
   };
 
   frame();
-}
+};
+
 export default function App() {
   const [pageIndex, setPageIndex] = useState(0);
   const { title, content, image, bgColor, rsvp, Lottie: showLottie, lottieFile, imageStyle } = pages[pageIndex];
-
-
 
   const handleNext = () => {
     if (pageIndex < pages.length - 1) setPageIndex((prev) => prev + 1);
@@ -114,7 +110,7 @@ export default function App() {
     if (pageIndex > 0) setPageIndex((prev) => prev - 1);
   };
 
-  // WhatsApp RSVP message URL (replace number and message as needed)
+  // WhatsApp RSVP message URL
   const whatsappNumber = "919677112811";
   const whatsappMessage = encodeURIComponent(
     `Yes! We Would Love to Join and bless you.`
@@ -123,7 +119,7 @@ export default function App() {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center bg-[#F8F2DE] px-4 py-10 relative"
+      className="min-h-screen flex flex-col items-center justify-center bg-[#F8F2DE] px-4 py-10 relative overflow-x-auto"
       style={{ backgroundColor: "#F8F2DE" }}
     >
       {/* Animated Couple Name */}
@@ -137,7 +133,11 @@ export default function App() {
       </motion.h1>
 
       {/* Book Card */}
-      <div className="relative w-full max-w-md aspect-[3/4] shadow-2xl rounded-xl overflow-hidden">
+      <div
+        className="relative min-w-[320px] max-w-md shadow-2xl rounded-xl overflow-hidden p-6 flex-shrink-0
+                   min-h-[400px] md:min-h-[450px] lg:min-h-[500px]"
+        style={{ backgroundColor: bgColor }}
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={pageIndex}
@@ -145,53 +145,49 @@ export default function App() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="absolute w-full h-full backface-hidden p-6 text-center flex flex-col items-center justify-between"
-            style={{ backgroundColor: bgColor }}
+            className="w-full h-full flex flex-col items-center justify-between text-center"
           >
             <div>
-              <h2 className="text-2xl font-bold text-white  font-serif mb-4 drop-shadow">
+              <h2 className="text-2xl font-bold text-white font-serif mb-4 drop-shadow">
                 {title}
               </h2>
-              <p className="whitespace-pre-wrap text-white  font-monospace  text-lg leading-relaxed drop-shadow">
+              <p className="whitespace-pre-wrap text-white font-monospace text-lg leading-relaxed drop-shadow">
                 {content}
               </p>
             </div>
 
-
-
             {showLottie ? (
-              <div className="mt-6 w-full h-44 md:h-48 lg:h-52">
+              <div className="mt-6 w-full h-44 md:h-48 lg:h-52 rounded-md overflow-hidden">
                 <Lottie
-                  animationData={pages[pageIndex].lottieFile || Animation}
+                  animationData={lottieFile || Animation}
                   loop
                   autoplay
                   className="w-full h-full"
                 />
               </div>
-
-
-            ) :
-              image && (
-                <img
-                  src={image}
-                  alt={title}
-                  className="mt-6 object-cover rounded-md shadow-lg"
-                  style={pages[pageIndex].imageStyle || { width: "100%", height: "160px" }}
-
-                />
-              )
-            }
+            ) : image ? (
+              <img
+                src={image}
+                alt={title}
+                className="mt-6 object-cover rounded-md shadow-lg max-w-full"
+                style={imageStyle || { maxWidth: "100%", height: "160px" }}
+              />
+            ) : null}
 
             {/* RSVP Button */}
             {rsvp && (
-              <div className="relative ">
-                <Button onClick={handleClick}
-                  //  href={whatsappLink}
+              <div className="relative mt-6">
+                <Button
+                  onClick={handleClick}
+                  // Uncomment to enable WhatsApp link navigation
+                  // href={whatsappLink}
                   target="_blank"
-                  rel="noopener noreferrer">Click to Bless!</Button>
+                  rel="noopener noreferrer"
+                >
+                  Click to Bless!
+                </Button>
               </div>
             )}
-
           </motion.div>
         </AnimatePresence>
       </div>
@@ -213,6 +209,10 @@ export default function App() {
           Next
         </button>
       </div>
+
+      <p className="text-red-900 bg-red-200 rounded-full p-2 flex mt-5 gap-3 items-center justify-center">
+        <FaRegHeart /> Developed with love By S.Fabia <FaRegHeart />
+      </p>
     </div>
   );
 }
